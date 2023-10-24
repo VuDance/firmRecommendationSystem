@@ -1,0 +1,33 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model Firm{
+  id           Int           @id @default(autoincrement())
+  image String
+  Name String @unique
+  genres Genres?
+  rating Float
+}
+
+model Genres{
+  id           Int           @id @default(autoincrement())
+  action Int
+  horror Int
+  cartoon Int
+  romantic Int
+  adventure  Int
+  sci_fi  Int
+  superhero Int
+
+  firm Firm @relation(fields: [firmId], references: [id])
+  firmId Int @unique
+}
